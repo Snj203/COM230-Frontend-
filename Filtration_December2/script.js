@@ -17,6 +17,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const addButton = document.getElementById('addButton');
   const searchInput = document.getElementById('searchInput');
   const dataList = document.getElementById('dataList');
+  const toggleButton = document.getElementById('toggleButton');
+
+  let isListVisible = true;
+
+  toggleButton.addEventListener('click', () => {
+    isListVisible = !isListVisible; 
+    if (isListVisible) {
+      toggleButton.textContent = 'Hide'; 
+      renderData(filterData(searchInput.value)); 
+    } else {
+      toggleButton.textContent = 'Show';
+      dataList.innerHTML = ''; 
+    }
+  });
+
+  function filterData(searchTerm) {
+    return data.filter(item =>
+      item.name.includes(searchTerm) 
+    );
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value; 
+    renderData(filterData(searchTerm));
+  });
 
   function renderData(filteredData) {
     dataList.innerHTML = '';
@@ -35,9 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   addButton.addEventListener('click', () => {
     const value = inputValue.value.trim();
-    if (value && !data.some(item => item.name === value)) { // Проверяем, что значение уникально
-      data.push({ name: value }); // Добавляем объект с полем name
-      inputValue.value = ''; // Очищаем поле ввода
+    if (value && !data.some(item => item.name === value)) { 
+      data.push({ name: value }); 
+      inputValue.value = ''; 
     }
     renderData(data);
   });
