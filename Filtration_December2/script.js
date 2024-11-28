@@ -33,5 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  addButton.addEventListener('click', () => {
+    const value = inputValue.value.trim();
+    if (value && !data.some(item => item.name === value)) { // Проверяем, что значение уникально
+      data.push({ name: value }); // Добавляем объект с полем name
+      inputValue.value = ''; // Очищаем поле ввода
+    }
+    renderData(data);
+  });
+
   renderData(data);
 });
