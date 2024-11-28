@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 10, name: 'JJJ' }
   ];
 
+  const inputValue = document.getElementById('inputValue');
+  const addButton = document.getElementById('addButton');
   const searchInput = document.getElementById('searchInput');
   const dataList = document.getElementById('dataList');
 
@@ -26,13 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     filteredData.forEach(item => {
       const listItem = document.createElement('li');
-      listItem.textContent = item.name; 
+      listItem.textContent = item.name;
       dataList.appendChild(listItem);
     });
   }
-
-
-
 
   renderData(data);
 });
