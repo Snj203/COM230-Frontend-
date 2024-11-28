@@ -1,26 +1,26 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 const rootElement = document.getElementById('root');
 
 function App() {
-  const initialData = [
-    { id: 1, name: 'AAA' },
-    { id: 2, name: 'BBB' },
-    { id: 3, name: 'CCC' },
-    { id: 4, name: 'DDD' },
-    { id: 5, name: 'EEE' },
-    { id: 6, name: 'FFF' },
-    { id: 7, name: 'GGG' },
-    { id: 8, name: 'HHH' },
-    { id: 9, name: 'III' },
-    { id: 10, name: 'JJJ' },
-  ];
-
-  const [data, setData] = useState(initialData); 
+  const [data, setData] = useState([]); 
   const [searchTerm, setSearchTerm] = useState(''); 
   const [isListVisible, setIsListVisible] = useState(true); 
 
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users') 
+      .then((response) => response.json())
+      .then((fetchedData) => {
+        const formattedData = fetchedData.map((user) => ({
+          id: user.id,
+          name: user.name,
+        }));
+        setData(formattedData);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []); 
+
   const filterData = (term) => {
-    return data.filter((item) => item.name.includes(term));
+    return data.filter((item) => item.name.toLowerCase().includes(term.toLowerCase()));
   };
 
   const addItem = () => {
@@ -30,6 +30,7 @@ function App() {
       document.getElementById('inputValue').value = '';
     }
   };
+
 
   const toggleVisibility = () => {
     setIsListVisible(!isListVisible);
