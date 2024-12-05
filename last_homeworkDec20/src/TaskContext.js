@@ -1,18 +1,13 @@
 import React, { createContext, useState } from "react";
+import useTaskManager from "./CustomTaskManager";
 
 const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
-
-  const addTask = (task) => {
-    if (task.trim()) {
-      setTasks([...tasks, task.trim()]);
-    }
-  };
+  const { tasks, addTask, deleteTask } = useTaskManager();
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );
