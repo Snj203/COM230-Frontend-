@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import TaskItem from "./TaskItem";
+import { TaskContext } from "./TaskContext";
 
-const TaskList = ({ tasks }) => {
+const TaskList = () => {
+  const { tasks } = useContext(TaskContext);
+
   return (
     <ul>
       {tasks.map((task, index) => (

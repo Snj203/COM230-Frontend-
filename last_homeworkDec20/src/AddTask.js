@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { TaskContext } from "./TaskContext";
 
-const AddTask = ({ newTask, setNewTask, addTask }) => {
+const AddTask = () => {
+  const { addTask } = useContext(TaskContext);
+  const [newTask, setNewTask] = useState("");
+
+  const handleAdd = () => {
+    addTask(newTask);
+    setNewTask("");
+  };
+
   return (
     <div>
       <input
@@ -9,7 +18,7 @@ const AddTask = ({ newTask, setNewTask, addTask }) => {
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
       />
-      <button onClick={addTask}>Add Task</button>
+      <button onClick={handleAdd}>Add Task</button>
     </div>
   );
 };
