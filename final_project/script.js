@@ -8,28 +8,42 @@ const getRandomSymbol = () => {
 
 function generatePassword(length, options) {
   const { uppercase, lowercase, numbers, symbols } = options;
-  const availableFunctions = [];
-  if (uppercase) availableFunctions.push(getRandomUppercase);
-  if (lowercase) availableFunctions.push(getRandomLowercase);
-  if (numbers) availableFunctions.push(getRandomNumber);
-  if (symbols) availableFunctions.push(getRandomSymbol);
+  const funcs = [];
+  if (uppercase) funcs.push(getRandomUppercase);
+  if (lowercase) funcs.push(getRandomLowercase);
+  if (numbers) funcs.push(getRandomNumber);
+  if (symbols) funcs.push(getRandomSymbol);
 
-  if (availableFunctions.length === 0 || length == 0) {
+  if (funcs.length === 0 || length == 0) {
     alert('Please select at least one character type!');
     return '';
   }
 
   let password = '';
   for (let i = 0; i < length; i++) {
-    const randomFunc = availableFunctions[Math.floor(Math.random() * availableFunctions.length)];
+    const randomFunc = funcs[Math.floor(Math.random() * funcs.length)];
     password += randomFunc();
   }
   return password;
 }
 
 function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then() 
+  navigator.clipboard.writeText(text).then()
   alert('Password copied!');
+}
+
+function calculateStrength(password) {
+  const len = password.length >= 12;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNums = /[0-9]/.test(password);
+  const hasSymbols = /[!@#$%^&*()_+[\]{}|;:,.<>?]/.test(password);
+
+  const passwordProps = [len, hasUpper, hasLower, hasNums, hasSymbols].filter(Boolean).length;
+
+  if (passwordProps >= 4) return 'Hard';
+  if (passwordProps >= 3) return 'Medium';
+  return 'Easy';
 }
 
 document.getElementById('generate').addEventListener('click', () => {
@@ -43,6 +57,12 @@ document.getElementById('generate').addEventListener('click', () => {
 
   const password = generatePassword(length, options);
   document.getElementById('password').textContent = password;
+  if (password) {
+    const strength = calculateStrength(password);
+    document.getElementById('strength').textContent = 'Strength: ' + strength;
+  }
+
+
 });
 
 document.getElementById('copy').addEventListener('click', () => {
@@ -53,3 +73,4 @@ document.getElementById('copy').addEventListener('click', () => {
     alert('Generate a password first!');
   }
 });
+
