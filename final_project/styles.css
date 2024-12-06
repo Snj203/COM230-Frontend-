@@ -1,9 +1,15 @@
+* {
+  padding-top: 3px;
+}
+
 body {
   font-family: Corbel;
-  margin: 20px;
+
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
@@ -13,16 +19,10 @@ input[type="number"] {
   width: 50px;
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
+input[type="text"] {
+  width: 300px;
 }
 
 .password {
-  margin-top: 20px;
   font-weight: bold;
-}
-
-.strength {
-  margin-top: 10px;
 }

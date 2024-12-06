@@ -18,45 +18,44 @@
       Password Length:
       <input type="number" id="length">
     </label>
-
     <label>
       <input type="checkbox" id="uppercase">
       Include Uppercase
     </label>
-
     <label>
       <input type="checkbox" id="lowercase">
       Include Lowercase
     </label>
-
     <label>
       <input type="checkbox" id="numbers">
       Include Numbers
     </label>
-
     <label>
       <input type="checkbox" id="symbols">
       Include Symbols
     </label>
-
-    <button id="generate">Generate Password</button>
-    <button id="copy">Copy to Clipboard</button>
+    <div>
+      <button id="generate">Generate Password</button>
+      <button id="copy">Copy to Clipboard</button>
+    </div>
     <div class="strength" id="strength"></div>
     <div class="password" id="password"></div>
-    <h3>Password History</h3>
-    <div class="history" id="history"></div>
+
     <h3>Decrypt password</h3>
+    <p>Enter EncryptedPassword:</p>
     <label>
       <input type="text" id="encryptedPassword">
-      EncrPassword:
     </label>
-    <label>
-      <input type="text" id="userSecretKey">
-      SecretKey:
-    </label>
-    <button id="decrypt">Decrypt Password</button>
-    <div class="decryptedPassword" id="decryptedPassword">a</div>
+    <p>Enter Secret Key:</pp>
+      <label>
+        <input type="text" id="userSecretKey">
+      </label>
+      <button id="decrypt">Decrypt Password</button>
+    <p>Decrypted Password:</p>
+    <div class="decryptedPassword" id="decryptedPassword"></div>
 
+    <h3>Password History</h3>
+    <div class="history" id="history"></div>
   </div>
   <script src="script.js"></script>
 </body>

@@ -104,5 +104,7 @@ document.getElementById('decrypt').addEventListener('click', () => {
   const userSecretKey = document.getElementById('userSecretKey').value;
   const decryptedPassword = decryptPassword(encryptedPassword, userSecretKey);
   document.getElementById('decryptedPassword').textContent = decryptedPassword;
+  document.getElementById('encryptedPassword').value = "";
+  document.getElementById('userSecretKey').value = "";
 });
 
