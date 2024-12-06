@@ -14,7 +14,7 @@ function generatePassword(length, options) {
   if (numbers) availableFunctions.push(getRandomNumber);
   if (symbols) availableFunctions.push(getRandomSymbol);
 
-  if (availableFunctions.length === 0) {
+  if (availableFunctions.length === 0 || length == 0) {
     alert('Please select at least one character type!');
     return '';
   }
@@ -27,6 +27,10 @@ function generatePassword(length, options) {
   return password;
 }
 
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then() 
+  alert('Password copied!');
+}
 
 document.getElementById('generate').addEventListener('click', () => {
   const length = parseInt(document.getElementById('length').value);
@@ -39,4 +43,13 @@ document.getElementById('generate').addEventListener('click', () => {
 
   const password = generatePassword(length, options);
   document.getElementById('password').textContent = password;
+});
+
+document.getElementById('copy').addEventListener('click', () => {
+  const password = document.getElementById('password').textContent;
+  if (password) {
+    copyToClipboard(password);
+  } else {
+    alert('Generate a password first!');
+  }
 });
