@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <title>Password Generator</title>
 
 </head>
@@ -42,6 +43,20 @@
     <button id="copy">Copy to Clipboard</button>
     <div class="strength" id="strength"></div>
     <div class="password" id="password"></div>
+    <h3>Password History</h3>
+    <div class="history" id="history"></div>
+    <h3>Decrypt password</h3>
+    <label>
+      <input type="text" id="encryptedPassword">
+      EncrPassword:
+    </label>
+    <label>
+      <input type="text" id="userSecretKey">
+      SecretKey:
+    </label>
+    <button id="decrypt">Decrypt Password</button>
+    <div class="decryptedPassword" id="decryptedPassword">a</div>
+
   </div>
   <script src="script.js"></script>
 </body>

@@ -6,6 +6,8 @@ const getRandomSymbol = () => {
   return symbols[Math.floor(Math.random() * symbols.length)];
 };
 
+const secretKey = "POSTAVTEZACHETPOZHALUISTA";
+
 function generatePassword(length, options) {
   const { uppercase, lowercase, numbers, symbols } = options;
   const funcs = [];
@@ -46,6 +48,30 @@ function calculateStrength(password) {
   return 'Easy';
 }
 
+function hashPasswordSync(password) {
+  return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+}
+
+function encryptPassword(password, secretKey) {
+  return CryptoJS.AES.encrypt(password, secretKey).toString();
+}
+
+function decryptPassword(encryptedPassword, secretKey) {
+  const bytes = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
+function updateHistory(password) {
+  const salt = generatePassword(12, { numbers: true });
+  const saltedPassword = salt + password;
+  const hashedPassword = hashPasswordSync(saltedPassword);
+  const encryptedPassword = encryptPassword(saltedPassword, secretKey)
+  const historyDiv = document.getElementById('history');
+  const newEntry = document.createElement('div');
+  newEntry.textContent = 'Password: ' + password + ' Encrypted: ' + encryptedPassword + ' Hash: ' + hashedPassword + ' Salt: ' + salt;
+  historyDiv.prepend(newEntry);
+}
+
 document.getElementById('generate').addEventListener('click', () => {
   const length = parseInt(document.getElementById('length').value);
   const options = {
@@ -60,9 +86,8 @@ document.getElementById('generate').addEventListener('click', () => {
   if (password) {
     const strength = calculateStrength(password);
     document.getElementById('strength').textContent = 'Strength: ' + strength;
+    updateHistory(password);
   }
-
-
 });
 
 document.getElementById('copy').addEventListener('click', () => {
@@ -72,5 +97,12 @@ document.getElementById('copy').addEventListener('click', () => {
   } else {
     alert('Generate a password first!');
   }
+});
+
+document.getElementById('decrypt').addEventListener('click', () => {
+  const encryptedPassword = document.getElementById('encryptedPassword').value;
+  const userSecretKey = document.getElementById('userSecretKey').value;
+  const decryptedPassword = decryptPassword(encryptedPassword, userSecretKey);
+  document.getElementById('decryptedPassword').textContent = decryptedPassword;
 });
 
